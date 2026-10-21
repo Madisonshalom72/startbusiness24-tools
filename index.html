@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StartBusiness24 — AI Tools for New Companies</title>
+<meta name="description" content="Business idea generator, logo styles, and an image studio for new companies. Idea, incorporation, logo, website, and your AI office — one flow.">
+<style>
+  :root{
+    --bg:#0c0a08; --panel:#161210; --panel2:#1e1813; --line:#33291f;
+    --cream:#f4ecdc; --cream-dim:#cbbfa9; --mut:#9a8b74;
+    --orange:#ff5a1f; --orange2:#ff8a3d; --ink:#0c0a08;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--cream);font-family:"Helvetica Neue",Arial,sans-serif;line-height:1.55;
+    background-image:repeating-linear-gradient(0deg,transparent,transparent 34px,rgba(244,236,220,.022) 35px)}
+  .cond{font-family:"Oswald","Arial Narrow","Helvetica Neue Condensed",Impact,sans-serif;text-transform:uppercase;letter-spacing:.02em}
+  a{color:inherit}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 18px}
+
+  /* header */
+  header{position:sticky;top:0;z-index:50;background:rgba(12,10,8,.92);backdrop-filter:blur(8px);border-bottom:2px solid var(--orange)}
+  .hrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .bmark{width:34px;height:34px;background:var(--orange);color:var(--ink);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:19px}
+  .bname{font-size:21px;font-weight:800;letter-spacing:.04em}
+  .bname span{color:var(--orange)}
+  .bsub{font-size:11px;color:var(--cream-dim);letter-spacing:.14em;text-transform:uppercase}
+  .btn{display:inline-block;background:var(--orange);color:var(--ink);font-weight:800;text-decoration:none;
+    padding:12px 20px;border:2px solid var(--ink);box-shadow:4px 4px 0 #000;text-transform:uppercase;letter-spacing:.05em;font-size:14px;cursor:pointer}
+  .btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #000}
+  .btn.ghost{background:transparent;color:var(--cream);border-color:var(--cream-dim);box-shadow:none}
+  .btn.small{padding:9px 14px;font-size:12.5px}
+
+  /* hero */
+  .hero{padding:52px 0 40px;border-bottom:1px solid var(--line)}
+  .kick{color:var(--orange);font-weight:800;letter-spacing:.22em;font-size:12.5px;text-transform:uppercase}
+  .hero h1{font-size:clamp(40px,8.4vw,74px);line-height:.98;font-weight:800;margin:14px 0 16px}
+  .hero h1 em{font-style:normal;color:var(--orange)}
+  .hero p{max-width:620px;color:var(--cream-dim);font-size:17px}
+  .hero .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+
+  section{padding:46px 0;border-bottom:1px solid var(--line)}
+  .shead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+  .snum{background:var(--orange);color:var(--ink);font-weight:900;padding:2px 9px;font-size:13px}
+  h2{font-size:clamp(27px,5.4vw,40px);font-weight:800;line-height:1.05}
+  .sdesc{color:var(--cream-dim);max-width:680px;margin-bottom:22px}
+  .tag{display:inline-block;border:1px solid var(--orange);color:var(--orange2);font-size:11px;font-weight:800;letter-spacing:.14em;padding:3px 9px;text-transform:uppercase}
+
+  /* generator */
+  .qblock{background:var(--panel);border:1px solid var(--line);padding:18px;margin-bottom:14px}
+  .qblock h3{font-size:16px;margin-bottom:4px}
+  .qblock .hint{color:var(--mut);font-size:13px;margin-bottom:12px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{background:var(--panel2);color:var(--cream);border:1px solid var(--line);padding:9px 14px;font-size:14px;cursor:pointer;font-family:inherit}
+  .chip:hover{border-color:var(--orange2)}
+  .chip.on{background:var(--orange);color:var(--ink);border-color:var(--orange);font-weight:700}
+  #genError{display:none;color:#ff7a52;font-weight:700;margin:12px 0 0}
+  #results{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:20px}
+  .idea{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--orange);padding:20px}
+  .idea h4{font-size:21px;line-height:1.15;margin-bottom:8px}
+  .idea .why{color:var(--cream-dim);font-size:14.5px;margin-bottom:12px}
+  .idea .meta{font-size:13.5px;margin-bottom:6px}
+  .idea .meta b{color:var(--orange2);text-transform:uppercase;letter-spacing:.08em;font-size:11.5px;display:block}
+  .idea ol{margin:6px 0 14px 18px;font-size:14.5px;color:var(--cream-dim)}
+  .idea ol li{margin-bottom:3px}
+
+  /* logos */
+  .pickers{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:18px}
+  .pickers .plabel{font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px}
+  .logo-card{background:var(--panel);border:1px solid var(--line);padding:16px;text-align:center}
+  .logo-card img{width:100%;aspect-ratio:1;object-fit:cover;display:block;border:1px solid var(--line)}
+  .logo-name{margin-top:12px;font-size:19px;line-height:1.1}
+  .logo-name.st-Bold{font-family:"Oswald","Arial Narrow",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
+  .logo-name.st-Classic{font-family:Georgia,"Times New Roman",serif;font-weight:700;letter-spacing:.06em}
+  .logo-name.st-Minimal{font-weight:300;letter-spacing:.34em;text-transform:uppercase;font-size:15px}
+  .logo-name.st-Badge{font-family:"Oswald","Arial Narrow",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.18em;font-size:15px}
+  .logo-sub{color:var(--mut);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-top:4px}
+  .logo-card.hide{display:none}
+  .fineprint{color:var(--mut);font-size:13.5px;margin-top:16px;max-width:680px}
+
+  /* studio */
+  .studio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+  .shot{background:var(--panel);border:1px solid var(--line)}
+  .shot img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+  .shot figcaption{padding:12px 14px}
+  .shot figcaption b{display:block;font-size:15px;margin-bottom:2px}
+  .shot figcaption span{color:var(--cream-dim);font-size:13.5px}
+
+  /* stack */
+  .stack{display:flex;flex-direction:column;gap:0}
+  .step{display:flex;gap:16px;background:var(--panel);border:1px solid var(--line);padding:18px;margin-bottom:10px;align-items:flex-start}
+  .step .n{flex:0 0 auto;width:38px;height:38px;background:var(--orange);color:var(--ink);font-weight:900;display:flex;align-items:center;justify-content:center;font-size:17px}
+  .step.upsell{border-color:var(--orange)}
+  .step h3{font-size:19px;line-height:1.15}
+  .step p{color:var(--cream-dim);font-size:14.5px;margin:4px 0 10px}
+
+  /* after you form */
+  .after{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+  .acard{background:var(--panel);border:1px solid var(--line);padding:18px}
+  .acard h3{font-size:16.5px;margin-bottom:6px}
+  .acard h3 span{color:var(--orange)}
+  .acard p{color:var(--cream-dim);font-size:14.5px}
+
+  footer{padding:34px 0 44px;color:var(--mut);font-size:13.5px}
+  footer .disc{max-width:760px;margin-bottom:14px}
+  footer b{color:var(--cream-dim)}
+  @media (max-width:560px){ .hrow{flex-wrap:wrap} .btn{box-shadow:3px 3px 0 #000} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap hrow">
+    <a class="brand" href="#top">
+      <span class="bmark">S</span>
+      <span><span class="bname cond">STARTBUSINESS<span>24</span></span><br>
+      <span class="bsub">AI Tools for New Companies</span></span>
+    </a>
+    <a class="btn small" href="https://startbusiness24.whop.site">Start Your Company</a>
+  </div>
+</header>
+
+<div class="wrap hero" id="top">
+  <div class="kick">■ C Corp in Seconds — C-Corps and LLCs for Founders</div>
+  <h1 class="cond">One-Click<br>Business <em>Creation.</em></h1>
+  <p>Idea, incorporation, and logo in one flow — then a website built from your company details, your corporate kit, and an AI office plugged in. Start with the free tools on this page, then form the company when you're ready.</p>
+  <div class="cta-row">
+    <a class="btn" href="#generator">Generate My Idea</a>
+    <a class="btn ghost" href="https://startbusiness24.whop.site">Start Your Company →</a>
+  </div>
+</div>
+
+<!-- 1 · IDEA GENERATOR -->
+<section id="generator">
+  <div class="wrap">
+    <div class="shead"><span class="snum">01</span><h2 class="cond">Business Idea Generator</h2></div>
+    <p class="sdesc">Answer four quick questions. The generator matches you against a built-in catalog of local-service and small-business ideas — no sign-up, no cost, runs right here on the page.</p>
+
+    <div class="qblock" id="q1">
+      <h3>1 · What are you good at — or willing to do?</h3>
+      <div class="hint">Pick up to 3.</div>
+      <div class="chips" data-group="skills">
+        <button type="button" class="chip" data-val="handson">Hands-on / fixing things</button>
+        <button type="button" class="chip" data-val="cleaning">Cleaning &amp; organizing</button>
+        <button type="button" class="chip" data-val="driving">Driving &amp; hauling</button>
+        <button type="button" class="chip" data-val="outdoors">Outdoors &amp; yards</button>
+        <button type="button" class="chip" data-val="food">Food &amp; people</button>
+        <button type="button" class="chip" data-val="pets">Animals &amp; pets</button>
+        <button type="button" class="chip" data-val="tech">Tech &amp; office work</button>
+        <button type="button" class="chip" data-val="creative">Creative &amp; design</button>
+      </div>
+    </div>
+
+    <div class="qblock" id="q2">
+      <h3>2 · What could you realistically start with?</h3>
+      <div class="hint">Your starting budget.</div>
+      <div class="chips" data-group="budget">
+        <button type="button" class="chip" data-val="1">Under $500</button>
+        <button type="button" class="chip" data-val="2">$500 – $2,500</button>
+        <button type="button" class="chip" data-val="3">$2,500 – $10,000</button>
+        <button type="button" class="chip" data-val="4">$10,000+</button>
+      </div>
+    </div>
+
+    <div class="qblock" id="q3">
+      <h3>3 · Where do you want to work?</h3>
+      <div class="hint">Home-based, or out on the road?</div>
+      <div class="chips" data-group="setting">
+        <button type="button" class="chip" data-val="home">Home-based</button>
+        <button type="button" class="chip" data-val="road">On the road / at customers</button>
+        <button type="button" class="chip" data-val="either">Either is fine</button>
+      </div>
+    </div>
+
+    <div class="qblock" id="q4">
+      <h3>4 · How many hours a week can you give it?</h3>
+      <div class="hint">Be honest — the matches respect it.</div>
+      <div class="chips" data-group="hours">
+        <button type="button" class="chip" data-val="light">Under 10 hrs</button>
+        <button type="button" class="chip" data-val="part">10 – 25 hrs</button>
+        <button type="button" class="chip" data-val="full">25 – 40 hrs</button>
+        <button type="button" class="chip" data-val="allin">40+ hrs — all in</button>
+      </div>
+    </div>
+
+    <button type="button" class="btn" id="generateBtn">Generate My 3 Ideas</button>
+    <p id="genError">Pick at least one skill, plus an answer for budget, work style, and hours — then generate.</p>
+    <div id="results"></div>
+  </div>
+</section>
+
+<!-- 2 · LOGO GENERATOR -->
+<section id="logos">
+  <div class="wrap">
+    <div class="shead"><span class="snum">02</span><h2 class="cond">Logo Generator</h2><span class="tag">Included in formation</span></div>
+    <p class="sdesc">Pick a style and an industry to preview the look. These are real generated samples — your final logo is generated with <b>your</b> company name during setup, in the style you choose.</p>
+
+    <div class="pickers">
+      <div>
+        <div class="plabel">Style</div>
+        <div class="chips" data-group="lstyle">
+          <button type="button" class="chip on" data-val="all">All styles</button>
+          <button type="button" class="chip" data-val="Bold">Bold</button>
+          <button type="button" class="chip" data-val="Classic">Classic</button>
+          <button type="button" class="chip" data-val="Minimal">Minimal</button>
+          <button type="button" class="chip" data-val="Badge">Badge</button>
+        </div>
+      </div>
+      <div>
+        <div class="plabel">Industry</div>
+        <div class="chips" data-group="lindustry">
+          <button type="button" class="chip on" data-val="all">All industries</button>
+          <button type="button" class="chip" data-val="cleaning">Cleaning</button>
+          <button type="button" class="chip" data-val="moving">Moving</button>
+          <button type="button" class="chip" data-val="food">Food</button>
+          <button type="button" class="chip" data-val="tech">Tech</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid" id="logoGrid">
+      <div class="logo-card" data-style="Bold" data-industry="cleaning">
+        <img src="assets/logos/logo-cleaning-bold.webp" alt="Bold cleaning logo mark — spray bottle and sparkle" loading="lazy">
+        <div class="logo-name st-Bold">SparklePro Clean Co.</div><div class="logo-sub">Bold · Cleaning</div>
+      </div>
+      <div class="logo-card" data-style="Minimal" data-industry="cleaning">
+        <img src="assets/logos/logo-cleaning-minimal.webp" alt="Minimal cleaning logo mark — droplet and leaf line art" loading="lazy">
+        <div class="logo-name st-Minimal">PureLeaf Cleaning</div><div class="logo-sub">Minimal · Cleaning</div>
+      </div>
+      <div class="logo-card" data-style="Bold" data-industry="moving">
+        <img src="assets/logos/logo-moving-bold.webp" alt="Bold moving logo mark — truck and upward arrow" loading="lazy">
+        <div class="logo-name st-Bold">SwiftHaul Moving</div><div class="logo-sub">Bold · Moving</div>
+      </div>
+      <div class="logo-card" data-style="Classic" data-industry="moving">
+        <img src="assets/logos/logo-moving-classic.webp" alt="Classic moving logo mark — vintage truck with laurel wreath" loading="lazy">
+        <div class="logo-name st-Classic">Heritage Movers</div><div class="logo-sub">Classic · Moving</div>
+      </div>
+      <div class="logo-card" data-style="Classic" data-industry="food">
+        <img src="assets/logos/logo-food-classic.webp" alt="Classic food logo mark — chef cloche with steam" loading="lazy">
+        <div class="logo-name st-Classic">Ember &amp; Oak Kitchen</div><div class="logo-sub">Classic · Food</div>
+      </div>
+      <div class="logo-card" data-style="Minimal" data-industry="food">
+        <img src="assets/logos/logo-food-minimal.webp" alt="Minimal food logo mark — flame and fork line art" loading="lazy">
+        <div class="logo-name st-Minimal">Kindle Eats</div><div class="logo-sub">Minimal · Food</div>
+      </div>
+      <div class="logo-card" data-style="Bold" data-industry="tech">
+        <img src="assets/logos/logo-tech-bold.webp" alt="Bold tech logo mark — lightning bolt circuit" loading="lazy">
+        <div class="logo-name st-Bold">VoltEdge Solutions</div><div class="logo-sub">Bold · Tech</div>
+      </div>
+      <div class="logo-card" data-style="Badge" data-industry="tech">
+        <img src="assets/logos/logo-tech-badge.webp" alt="Badge tech logo mark — hexagonal gear emblem" loading="lazy">
+        <div class="logo-name st-Badge">NorthPeak Systems</div><div class="logo-sub">Badge · Tech</div>
+      </div>
+    </div>
+
+    <p class="fineprint">Preview the style — your final logo is generated with your company name during setup, and it's part of the formation flow, not a separate design bill.</p>
+    <p style="margin-top:14px"><a class="btn small" href="https://startbusiness24.whop.site">Form My Company →</a></p>
+  </div>
+</section>
+
+<!-- 3 · IMAGE STUDIO -->
+<section id="studio">
+  <div class="wrap">
+    <div class="shead"><span class="snum">03</span><h2 class="cond">Image Studio</h2></div>
+    <p class="sdesc">A new company needs pictures before it needs anything else. The studio generates the marketing images a starter business actually uses — made from your business details, in your brand colors. Samples below.</p>
+
+    <div class="studio-grid">
+      <figure class="shot">
+        <img src="assets/studio/studio-social-post.webp" alt="Sample social post design on a phone, flat-lay with cleaning supplies" loading="lazy">
+        <figcaption><b>Social posts</b><span>Scroll-stopping posts for the services you sell, sized for every platform.</span></figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="assets/studio/studio-truck-crew.webp" alt="Sample crew shot — two-person team loading a branded work truck" loading="lazy">
+        <figcaption><b>Truck &amp; crew shots</b><span>The "real company" photo for your website and profiles — truck, crew, golden hour.</span></figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="assets/studio/studio-product-shot.webp" alt="Sample product shot — branded t-shirt, cap, and mug on dark background" loading="lazy">
+        <figcaption><b>Product &amp; merch shots</b><span>Clean product photos of your gear, uniforms, and merch — no photo shoot needed.</span></figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="assets/studio/studio-storefront.webp" alt="Sample storefront image — small shop glowing at dusk" loading="lazy">
+        <figcaption><b>Storefront &amp; location</b><span>Your corner of the world, lit up — for your site, maps listing, and launch post.</span></figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="assets/studio/studio-ad-creative.webp" alt="Sample ad creative on a phone held up at dusk" loading="lazy">
+        <figcaption><b>Ad creative</b><span>Bold ad images in your colors, ready to run when you start promoting.</span></figcaption>
+      </figure>
+    </div>
+
+    <p class="fineprint">Every sample on this page was generated by the same studio. Yours are made with your company name, your services, and your colors during setup.</p>
+    <p style="margin-top:14px"><a class="btn small" href="https://startbusiness24.whop.site">Start Your Company →</a></p>
+  </div>
+</section>
+
+<!-- 4 · THE STACK -->
+<section id="stack">
+  <div class="wrap">
+    <div class="shead"><span class="snum">04</span><h2 class="cond">The Stack</h2></div>
+    <p class="sdesc">How a company gets built here — in order. The core flow is one click; the kit and Alice are the two upsells that make it complete.</p>
+
+    <div class="stack">
+      <div class="step">
+        <div class="n">1</div>
+        <div><h3 class="cond">Idea</h3>
+          <p>Use the free generator above to land on a business that fits your skills, budget, and hours.</p>
+          <a class="btn small ghost" href="#generator">Open the Generator</a></div>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <div><h3 class="cond">One-Click Formation (+ Logo)</h3>
+          <p>The core: form your C-Corp or LLC through a short questionnaire — you review the details and the price before anything is charged — and your logo is generated in the same flow.</p>
+          <a class="btn small" href="https://startbusiness24.whop.site">Start Your Company</a></div>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <div><h3 class="cond">Website</h3>
+          <p>Your website is created from your incorporation details — company name, industry, and services — so the business can start right away, not "someday."</p>
+          <a class="btn small" href="https://aliceaihub.xyz/getsite.html">Build My Website</a></div>
+      </div>
+      <div class="step upsell">
+        <div class="n">4</div>
+        <div><h3 class="cond">Corporate Kit Book <span class="tag">Upsell</span></h3>
+          <p>The kit add-on: your corporate record book, share certificates, starter contracts, and company seal — the business books, done right from day one.</p>
+          <a class="btn small" href="https://startbusiness24.whop.site">Add the Kit</a></div>
+      </div>
+      <div class="step upsell">
+        <div class="n">5</div>
+        <div><h3 class="cond">Alice AI Plugin <span class="tag">Upsell</span></h3>
+          <p>Plug Alice AI into the business as its office — she answers, quotes, and books jobs on your new website while you're out doing the work.</p>
+          <a class="btn small" href="https://aliceaihub.xyz">Plug In Alice AI</a></div>
+      </div>
+      <div class="step">
+        <div class="n">6</div>
+        <div><h3 class="cond">After You Form</h3>
+          <p>Taxes and the unglamorous steps that keep a new company clean — EIN, elections, quarterly taxes, filings. Covered below.</p>
+          <a class="btn small ghost" href="#after">See the Steps</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · AFTER YOU FORM -->
+<section id="after">
+  <div class="wrap">
+    <div class="shead"><span class="snum">05</span><h2 class="cond">After You Form</h2></div>
+    <p class="sdesc">Forming the company is the starting line. Here's what comes next — taxes front and center. This section is educational: it explains the steps, it is not tax advice, and a CPA is worth the money before your first deadline.</p>
+
+    <div class="after">
+      <div class="acard"><h3><span>▸</span> Get your EIN</h3>
+        <p>Your federal tax ID from the IRS — free, online, and needed for your business bank account, taxes, and hiring. A company without an EIN runs on your personal Social Security number, which defeats the point of forming.</p></div>
+      <div class="acard"><h3><span>▸</span> Decide the S-corp election — on a deadline</h3>
+        <p>An LLC (or C-Corp) can elect S-corp tax treatment with Form 2553, but it must be filed within 2 months and 15 days of the start of your tax year. Miss the window and you generally wait until next year — mark this date the week you form.</p></div>
+      <div class="acard"><h3><span>▸</span> Quarterly estimated taxes</h3>
+        <p>There's no employer withholding your taxes anymore. Most owners pay estimated taxes four times a year to the IRS and their state — skip them and the bill arrives with penalties attached.</p></div>
+      <div class="acard"><h3><span>▸</span> Sales-tax registration</h3>
+        <p>If you sell taxable goods or services, register with your state to collect and remit sales tax before your first sale. The rules are state-by-state — check yours, don't guess.</p></div>
+      <div class="acard"><h3><span>▸</span> Bookkeeping from day one</h3>
+        <p>A separate business bank account and simple bookkeeping from the first dollar. Clean books are what make tax time survivable — and they're half of what a business is worth if you ever sell it.</p></div>
+      <div class="acard"><h3><span>▸</span> Annual filings &amp; state fees</h3>
+        <p>Most states want an annual report (and a fee or franchise tax) to keep your company in good standing. Miss them long enough and the state can dissolve the company you just paid to form.</p></div>
+      <div class="acard"><h3><span>▸</span> Licenses &amp; permits</h3>
+        <p>Your city, county, or trade may require a license before you can legally take the first job. Your corporate kit and formation details make these applications faster to complete.</p></div>
+      <div class="acard"><h3><span>▸</span> Keep the books real</h3>
+        <p>Minutes, membership/share records, and contracts in your Corporate Kit Book aren't decoration — they're the paper trail that keeps your company treated as a company.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="disc"><b>Educational tools, not professional advice.</b> The idea generator, logo and image samples, and the "After You Form" steps on this page are educational. Startup costs shown are rough planning estimates, not guarantees, and no income is promised or implied — what a business earns depends on the owner and the market. Filing and approval timing is set by the state, not by this page. For tax and legal decisions, use a licensed CPA or attorney in your state.</p>
+    <p>STARTBUSINESS24 — AI Tools for New Companies · by <b>Capital 7 Logistics</b></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- catalog: 26 ideas ---------- */
+/* tags: skill keys · b: budget tier 1-4 · s: home|road · h: light|part|full|allin (minimum comfortable pace) */
+var CATALOG = [
+ {n:"Residential Cleaning Service", tags:["cleaning"], b:1, s:"road", h:"light", cost:"$200 – $800", fit:"cleaning is in your hands and the starter kit is mops, chemicals, and a vacuum you may already own",
+  steps:["Price per-home packages (basic, deep, move-out)","Offer a first-clean special to land 5 starter homes","Ask every client for a review and a referral"], ent:"LLC"},
+ {n:"Move-Out & Turnover Cleaning", tags:["cleaning","handson"], b:1, s:"road", h:"part", cost:"$300 – $1,200", fit:"landlords and property managers pay for fast, reliable turnovers between tenants",
+  steps:["List your turnover checklist and per-bedroom pricing","Pitch 10 local landlords and realtors directly","Photograph every finished unit for your page"], ent:"LLC"},
+ {n:"Handyman & Small Repairs", tags:["handson"], b:2, s:"road", h:"part", cost:"$500 – $2,500", fit:"you fix things — every homeowner has a list of small jobs no contractor will take",
+  steps:["Publish a flat-rate menu of the 15 most common fixes","Stock the truck with the parts those jobs always need","Book by the half-day to stack several homes per route"], ent:"LLC"},
+ {n:"Junk Removal & Haul-Outs", tags:["driving","handson"], b:3, s:"road", h:"part", cost:"$2,500 – $9,000", fit:"a truck, strong arms, and dump fees are the whole business — and everybody has junk",
+  steps:["Line up your dump and donation drop-off routes","Price by the load: quarter, half, full","Post before/after photos of every cleanout"], ent:"LLC"},
+ {n:"Clean-Out Services (Estates & Evictions)", tags:["driving","cleaning","handson"], b:3, s:"road", h:"full", cost:"$3,000 – $10,000", fit:"whole-property cleanouts are bigger tickets that realtors and estates need handled fast",
+  steps:["Build a per-room and per-load pricing sheet","Market to realtors, estate attorneys, and property managers","Add haul-away and donation receipts as a service"], ent:"LLC"},
+ {n:"Moving Labor Crew", tags:["driving","handson"], b:2, s:"road", h:"part", cost:"$400 – $2,000", fit:"customers rent their own truck and hire your crew to load and unload — low overhead, real demand",
+  steps:["Set a 2-worker hourly rate with a 2-hour minimum","List on moving-labor marketplaces and local groups","Bring blankets, straps, and dollies to every job"], ent:"LLC"},
+ {n:"Mobile Car Detailing", tags:["cleaning","driving"], b:2, s:"road", h:"part", cost:"$600 – $2,800", fit:"you go to the customer's driveway with a water tank, vacuum, and polisher — no shop rent",
+  steps:["Build 3 detail packages (express, full, ceramic spray)","Book office parks and apartment complexes in batches","Sell monthly maintenance plans to your first 20 clients"], ent:"LLC"},
+ {n:"Lawn Care & Mowing Route", tags:["outdoors","driving"], b:3, s:"road", h:"full", cost:"$2,500 – $8,500", fit:"a mower, trimmer, and a tight route of weekly yards is a classic recurring-revenue business",
+  steps:["Price weekly and bi-weekly plans per yard size","Cluster clients by neighborhood to cut drive time","Add mulch, cleanup, and leaf services in the off-season"], ent:"LLC"},
+ {n:"Pressure Washing", tags:["outdoors","handson"], b:2, s:"road", h:"part", cost:"$800 – $3,000", fit:"driveways, siding, and decks — dramatic before/afters that practically sell themselves",
+  steps:["Buy a commercial-grade washer and surface cleaner","Price by the job with photo estimates","Leave door hangers on the street you just washed"], ent:"LLC"},
+ {n:"Gutter Cleaning & Guards", tags:["outdoors","handson"], b:2, s:"road", h:"part", cost:"$700 – $2,600", fit:"seasonal, ladder-and-blower work homeowners dread doing themselves",
+  steps:["Offer cleaning plus guard installation packages","Book spring and fall routes by neighborhood","Bundle with pressure washing for a full exterior day"], ent:"LLC"},
+ {n:"Snow Removal Route", tags:["outdoors","driving"], b:3, s:"road", h:"full", cost:"$2,000 – $9,500", fit:"a plow or blower fleet and a season contract list — winter pays for the whole year",
+  steps:["Sell season contracts before the first forecast","Route driveways tight to a single area","Pair it with lawn care so the same clients pay all year"], ent:"LLC"},
+ {n:"Pet Sitting & Dog Walking", tags:["pets"], b:1, s:"road", h:"light", cost:"$100 – $600", fit:"low startup, booked through apps and word of mouth — walks and drop-ins stack into a real route",
+  steps:["Set walk, drop-in, and overnight rates","Get insured and listed on the pet-care platforms","Send photo updates — they're your best marketing"], ent:"LLC"},
+ {n:"Poop-Scoop Yard Service", tags:["pets","outdoors"], b:1, s:"road", h:"light", cost:"$150 – $700", fit:"weekly yard cleanup on subscription — unglamorous, recurring, and almost no competition",
+  steps:["Price weekly and twice-weekly subscriptions","Route by neighborhood like a lawn route","Upsell deodorizing and one-time cleanups"], ent:"LLC"},
+ {n:"Food Truck / Mobile Kitchen", tags:["food"], b:4, s:"road", h:"allin", cost:"$15,000 – $60,000", fit:"a tight menu and the right corners — events, breweries, and lunch crowds",
+  steps:["Lock a short menu you can execute fast","Clear your county health permits and commissary","Book events and regular stops a month out"], ent:"either"},
+ {n:"Coffee & Breakfast Cart", tags:["food"], b:3, s:"road", h:"part", cost:"$3,000 – $10,000", fit:"a cart, permits, and a morning spot near offices, hospitals, or campuses",
+  steps:["Secure a permitted morning location","Keep the menu to coffee plus 4 food items","Sell office pre-orders the night before"], ent:"LLC"},
+ {n:"Vending Machine Route", tags:["driving","tech"], b:3, s:"road", h:"light", cost:"$2,500 – $10,000", fit:"machines in break rooms and lobbies, restocked on a route — income while you're elsewhere",
+  steps:["Start with 2–3 used machines and solid locations","Track what sells per machine, per week","Expand only into locations like the ones that already work"], ent:"LLC"},
+ {n:"Virtual Bookkeeping for Trades", tags:["tech"], b:1, s:"home", h:"part", cost:"$300 – $1,500", fit:"contractors drown in invoices and receipts — you clean their books from home, monthly, recurring",
+  steps:["Pick one niche (one trade) and learn its invoicing rhythm","Price flat monthly packages, not hourly","Offer a one-time cleanup to start every relationship"], ent:"LLC"},
+ {n:"Online Store for Local Makers", tags:["tech","creative"], b:2, s:"home", h:"part", cost:"$500 – $3,000", fit:"you run the listings, photos, and shipping for makers who'd rather make than market",
+  steps:["Recruit 5 makers with products ready to ship","Standardize photos, listings, and packaging","Take a percentage instead of charging upfront"], ent:"LLC"},
+ {n:"Print-on-Demand Brand", tags:["creative","tech"], b:1, s:"home", h:"light", cost:"$100 – $800", fit:"designs on shirts and mugs, printed only when sold — no inventory, all from your laptop",
+  steps:["Design for one specific niche audience, not everyone","List 20+ designs before judging any of them","Post the design process, not just the product"], ent:"LLC"},
+ {n:"Social Media Manager for Local Shops", tags:["creative","tech"], b:1, s:"home", h:"part", cost:"$200 – $1,000", fit:"local businesses know they should post and never do — you shoot, edit, and schedule for them",
+  steps:["Package 12 posts a month at one flat rate","Batch-shoot content one day a month per client","Lead with one free week of posts to prove it"], ent:"LLC"},
+ {n:"Furniture Flipping & Assembly", tags:["handson","creative"], b:2, s:"either", h:"part", cost:"$400 – $2,000", fit:"curb finds and marketplace pieces, refinished and resold — plus paid assembly gigs on the side",
+  steps:["Learn the 3 finishes that sell fastest locally","Photograph pieces staged, never in the garage","Offer delivery — it closes the sale"], ent:"LLC"},
+ {n:"Home Organizing", tags:["cleaning","creative"], b:1, s:"road", h:"part", cost:"$200 – $900", fit:"closets, pantries, and garages — clients pay for the calm, and the before/afters market you",
+  steps:["Price by the space, not the hour","Stock bins and labels as a pass-through product","Photograph every transformation (with permission)"], ent:"LLC"},
+ {n:"Errand & Concierge Service", tags:["driving"], b:1, s:"road", h:"light", cost:"$200 – $800", fit:"pickups, drop-offs, returns, and waiting on the cable guy — sold by the hour to busy people",
+  steps:["Set an hourly rate with a 1-hour minimum","Target realtors, seniors, and busy professionals","Offer weekly standing slots for regulars"], ent:"LLC"},
+ {n:"Mobile Notary & Signing Agent", tags:["driving","tech"], b:1, s:"road", h:"part", cost:"$300 – $1,200", fit:"commissioned by your state, you travel to signings — real estate closings pay the best",
+  steps:["Get your state notary commission and supplies","Complete loan-signing training and get listed","Market to title companies and realtors"], ent:"LLC"},
+ {n:"Event Setup & Party Rental Helper", tags:["handson","driving"], b:3, s:"road", h:"full", cost:"$2,500 – $9,000", fit:"chairs, tents, and bounce houses — weekends booked out all season once word spreads",
+  steps:["Start with tables, chairs, and one tent package","Price delivery + setup + teardown as one number","Partner with venues and party planners"], ent:"LLC"},
+ {n:"Apartment Turnover Painting", tags:["handson"], b:2, s:"road", h:"full", cost:"$600 – $2,400", fit:"landlords repaint every unit, every tenant — same colors, same walls, steady volume",
+  steps:["Price per bedroom with paint included","Standardize on the 2 colors landlords actually use","Line up 3 property managers before you buy gear"], ent:"LLC"},
+ {n:"C-Corp Startup (Venture Track)", tags:["tech"], b:4, s:"home", h:"allin", cost:"$10,000+", fit:"building something meant to raise money and issue stock to investors and co-founders",
+  steps:["Write the one-page pitch: problem, product, customer","Form the C-Corp and set up the corporate kit from day one","Open the business bank account and keep immaculate books"], ent:"C-Corp"}
+];
+
+var HOURS_RANK = {light:0, part:1, full:2, allin:3};
+
+function scoreIdea(idea, a){
+  var s = 0, i;
+  for (i=0;i<idea.tags.length;i++) if (a.skills.indexOf(idea.tags[i])>-1) s += 3;
+  if (idea.b <= a.budget) s += 2;
+  if (idea.b === a.budget) s += 1;
+  if (idea.b > a.budget) s -= (idea.b - a.budget) * 2;
+  if (a.setting === "either" || idea.s === a.setting || idea.s === "either") s += 2;
+  if (HOURS_RANK[a.hours] >= HOURS_RANK[idea.h]) s += 2; else s -= 2;
+  return s;
+}
+function generateIdeas(a){
+  var scored = CATALOG.map(function(idea, idx){ return {idea:idea, idx:idx, score:scoreIdea(idea, a)}; });
+  scored.sort(function(x,y){ return (y.score - x.score) || (x.idx - y.idx); });
+  return scored.slice(0,3).map(function(x){ return x.idea; });
+}
+function entityLine(idea){
+  if (idea.ent === "C-Corp") return "What you'd file: a C-Corp — the standard structure when investors and stock are part of the plan.";
+  if (idea.ent === "either") return "What you'd file: usually an LLC to start — simple and flexible — or a C-Corp if investors are part of the plan.";
+  return "What you'd file: an LLC — the standard starter structure for an owner-run service business.";
+}
+
+/* ---------- chip plumbing ---------- */
+function bindGroup(name, multi, max){
+  var box = document.querySelector('[data-group="'+name+'"]');
+  if (!box) return;
+  var chips = box.querySelectorAll(".chip");
+  chips.forEach(function(chip){
+    chip.addEventListener("click", function(){
+      if (multi){
+        var on = box.querySelectorAll(".chip.on");
+        if (!chip.classList.contains("on") && on.length >= max) return;
+        chip.classList.toggle("on");
+      } else {
+        chips.forEach(function(c){ c.classList.remove("on"); });
+        chip.classList.add("on");
+      }
+    });
+  });
+}
+function groupVal(name){
+  var box = document.querySelector('[data-group="'+name+'"]');
+  if (!box) return null;
+  var on = box.querySelector(".chip.on");
+  return on ? on.getAttribute("data-val") : null;
+}
+function groupVals(name){
+  var box = document.querySelector('[data-group="'+name+'"]');
+  if (!box) return [];
+  var out = [];
+  box.querySelectorAll(".chip.on").forEach(function(c){ out.push(c.getAttribute("data-val")); });
+  return out;
+}
+
+bindGroup("skills", true, 3);
+bindGroup("budget", false, 1);
+bindGroup("setting", false, 1);
+bindGroup("hours", false, 1);
+bindGroup("lstyle", false, 1);
+bindGroup("lindustry", false, 1);
+
+/* logo filters */
+function applyLogoFilter(){
+  var st = groupVal("lstyle") || "all", ind = groupVal("lindustry") || "all";
+  document.querySelectorAll(".logo-card").forEach(function(card){
+    var ok = (st==="all" || card.getAttribute("data-style")===st) && (ind==="all" || card.getAttribute("data-industry")===ind);
+    if (ok) card.classList.remove("hide"); else card.classList.add("hide");
+  });
+}
+["lstyle","lindustry"].forEach(function(g){
+  var box = document.querySelector('[data-group="'+g+'"]');
+  if (box) box.querySelectorAll(".chip").forEach(function(c){ c.addEventListener("click", applyLogoFilter); });
+});
+
+/* generate */
+var genBtn = document.getElementById("generateBtn");
+genBtn.addEventListener("click", function(){
+  var skills = groupVals("skills");
+  var budget = groupVal("budget"), setting = groupVal("setting"), hours = groupVal("hours");
+  var err = document.getElementById("genError");
+  var results = document.getElementById("results");
+  if (!skills.length || !budget || !setting || !hours){ err.style.display = "block"; return; }
+  err.style.display = "none";
+  var answers = {skills:skills, budget:parseInt(budget,10), setting:setting, hours:hours};
+  var ideas = generateIdeas(answers);
+  var html = "";
+  ideas.forEach(function(idea){
+    html += '<article class="idea"><h4 class="cond">'+idea.n+'</h4>'
+      + '<p class="why"><b>Why it fits you:</b> '+idea.fit+'.</p>'
+      + '<p class="meta"><b>Estimated startup cost</b>'+idea.cost+' <span style="color:var(--mut)">(estimate — your market will vary)</span></p>'
+      + '<p class="meta"><b>First 3 steps</b></p><ol>'
+      + idea.steps.map(function(s){ return "<li>"+s+"</li>"; }).join("")
+      + '</ol>'
+      + '<p class="meta"><b>Filing</b>'+entityLine(idea)+'</p>'
+      + '<a class="btn small" href="https://startbusiness24.whop.site">Form This Company →</a></article>';
+  });
+  results.innerHTML = html;
+  if (results.scrollIntoView) results.scrollIntoView({behavior:"smooth", block:"start"});
+});
+
+/* exposed for testing */
+window.SB24 = { CATALOG: CATALOG, generateIdeas: generateIdeas, scoreIdea: scoreIdea };
+})();
+</script>
+</body>
+</html>
